@@ -26,6 +26,7 @@ app.register_blueprint(shop_bp)
 app.register_blueprint(cart_bp)
 app.register_blueprint(admin_bp)
 
+
 with app.app_context():
     db.create_all()
 
