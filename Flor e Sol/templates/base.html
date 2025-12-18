@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flor e Sol</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a href="{{ url_for('shop.index') }}" class="brand">Flor e Sol</a>
+      <form action="{{ url_for('shop.index') }}" class="search">
+        <input type="text" name="q" value="{{ q or '' }}" placeholder="Buscar produtos">
+        <button type="submit">Buscar</button>
+      </form>
+      <nav class="nav">
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('cart.view_cart') }}">Carrinho</a>
+          <a href="{{ url_for('auth.logout') }}">Sair</a>
+          {% if current_user.is_admin %}
+          <a href="{{ url_for('admin.products') }}">Admin</a>
+          {% endif %}
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Entrar</a>
+          <a href="{{ url_for('auth.register') }}">Cadastrar</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flash">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>© {{ 2025 }} Flor e Sol</p>
+    </div>
+  </footer>
+</body>
+</html>

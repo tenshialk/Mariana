@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Seu carrinho</h1>
+{% if items %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Produto</th>
+      <th>Qtd</th>
+      <th>Preço</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <td>{{ products[item.product_id].name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>R$ {{ '%.2f'|format(products[item.product_id].price * item.quantity) }}</td>
+      <td>
+        <form action="{{ url_for('cart.remove_item', item_id=item.id) }}" method="post">
+          <button type="submit">Remover</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="total">Total: R$ {{ '%.2f'|format(total) }}</p>
+<form action="{{ url_for('cart.checkout') }}" method="post">
+  <button type="submit" class="button">Finalizar compra</button>
+</form>
+{% else %}
+<p>Seu carrinho está vazio.</p>
+{% endif %}
+{% endblock %}

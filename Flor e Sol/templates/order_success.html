@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Pedido realizado</h1>
+<p>Pedido #{{ order.id }} criado com sucesso.</p>
+<a class="button" href="{{ url_for('shop.index') }}">Continuar comprando</a>
+{% endblock %}
